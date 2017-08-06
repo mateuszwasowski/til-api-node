@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         Til.hasMany(models.Vote, {
           foreignKey: 'tilId',
           onDelete: 'CASCADE',
-        }),
+        });
       },
     },
   });
