@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "node_til",
+    "password": null,
+    "database": "til_node_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "node_til",
+    "password": null,
+    "database": "til_node_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "node_til",
+    "password": null,
+    "database": "til_node_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
