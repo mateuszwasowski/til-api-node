@@ -3,19 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Author.hasMany(models.Til, {
-          foreignKey: 'authorId',
-          as: 'tils',
-        }),
-        Author.hasMany(models.Vote, {
-          foreignKey: 'authorId',
-          as: 'tils',
-        });
-      },
-    },
   });
+  Author.associate = (models) => {
+    Author.hasMany(models.Til, {
+      foreignKey: 'authorId',
+      as: 'tils',
+    }),
+    Author.hasMany(models.Vote, {
+      foreignKey: 'authorId',
+      as: 'votes',
+    });
+  };
   return Author;
 };
