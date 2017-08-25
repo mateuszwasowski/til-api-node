@@ -1,6 +1,7 @@
 const Til = require('../models').Til;
 const Vote = require('../models').Vote;
 const Author = require('../models').Author;
+const TilSerializer = require('../serializers/til_serializer');
 
 module.exports = {
   create(req, res) {
@@ -32,10 +33,12 @@ module.exports = {
         ],
       })
       .then(til => {
+        var jsonapi = TilSerializer.serialize(til);
+
         if (!til) {
           return res.status(400).send({ message: "Til not found." });
         }
-        return res.status(200).send(til);
+        return res.status(200).send(jsonapi);
       })
       .catch(error => res.status(400).send(error));
   },
