@@ -1,5 +1,6 @@
 const Author = require('../models').Author;
 const Til = require('../models').Til;
+const AuthorSerializer = require('../serializers/author_serializer');
 
 module.exports = {
   create(req, res) {
@@ -30,10 +31,11 @@ module.exports = {
         ],
       })
       .then(author => {
+        var jsonapi = AuthorSerializer.serialize(author);
         if (!author) {
           return res.status(404).send({ message: 'Author Not Found' });
         }
-        return res.status(200).send(author);
+        return res.status(200).send(jsonapi);
       })
       .catch(error => res.status(400).send(error));
   },

@@ -1,6 +1,7 @@
 const Vote = require('../models').Vote;
 const Til = require('../models').Til;
 const Author = require('../models').Author;
+const VoteSerializer = require('../serializers/vote_serializer');
 
 module.exports = {
   create(req, res) {
@@ -32,10 +33,12 @@ module.exports = {
         ]
       })
       .then(vote => {
+        var jsonapi = VoteSerializer.serialize(vote);
+
         if (!vote) {
           return res.status(400).send({ message: "Vote not found." });
         }
-        return res.status(200).send(vote);
+        return res.status(200).send(jsonapi);
       })
       .catch(error => res.status(400).send(error));
   },

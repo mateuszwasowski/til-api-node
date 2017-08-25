@@ -1,6 +1,7 @@
 const tilsController = require('../controllers').tils;
 const authorsController = require('../controllers').authors;
 const votesController = require('../controllers').votes
+const sessionController = require('../controllers').session
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -21,4 +22,6 @@ module.exports = (app) => {
   app.get('/api/votes', votesController.list);
   app.get('/api/votes/:voteId', votesController.retrieve);
   app.delete('/api/votes/:voteId', votesController.destroy);
+
+  app.get('/google_auth', sessionController.google_auth);
 };
