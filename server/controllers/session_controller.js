@@ -10,12 +10,17 @@ module.exports = {
     console.log(req.params);
     console.log(req.query);
     return Author
-    .findById(2, {
+    .findById(1, {
       include:[
         { model: Til, as: 'tils' }
       ]
     })
-    .then(authors => res.status(200).send(AuthorSerializer.serialize(authors)))
+    .then(author => {
+      if (!author) {
+        return res.status(404).send({ message: 'Author Not Found' });
+      }
+      return res.status(200).send(AuthorSerializer.serialize(author));
+    })
     .catch(error => res.status(400).send(error));
   }
 }
