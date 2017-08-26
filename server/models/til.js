@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'authorId',
       onDelete: 'CASCADE',
       as: "author",
+      allowNull: false,
     }),
     Til.hasMany(models.Vote, {
       foreignKey: 'tilId',

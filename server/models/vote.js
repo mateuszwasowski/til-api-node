@@ -6,11 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'authorId',
       onDelete: 'CASCADE',
       as: "author",
+      allowNull: false,
     }),
     Vote.belongsTo(models.Til, {
       foreignKey: 'tilId',
       onDelete: 'CASCADE',
       as: "til",
+      allowNull: false,
     });
   };
   return Vote;

@@ -6,11 +6,11 @@ module.exports = {
   create(req, res) {
     return Author
       .create({
-        email: req.body.email,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        email: req.body.data.attributes.email,
+        first_name: req.body.data.attributes.first_name,
+        last_name: req.body.data.attributes.last_name,
       })
-      .then(author => res.status(201).send(author))
+      .then(author => res.status(201).send(AuthorSerializer.serialize(author)))
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
@@ -20,7 +20,7 @@ module.exports = {
           { model: Til, as: "tils" }
         ],
       })
-      .then(authors => res.status(200).send(authors))
+      .then(authors => res.status(200).send(AuthorSerializer.serialize(authors)))
       .catch(error => res.status(400).send(error));
   },
   retrieve(req, res) {
@@ -31,11 +31,10 @@ module.exports = {
         ],
       })
       .then(author => {
-        var jsonapi = AuthorSerializer.serialize(author);
         if (!author) {
           return res.status(404).send({ message: 'Author Not Found' });
         }
-        return res.status(200).send(jsonapi);
+        return res.status(200).send(AuthorSerializer.serialize(author));
       })
       .catch(error => res.status(400).send(error));
   },
@@ -44,9 +43,7 @@ module.exports = {
       .findById(req.params.authorId)
       .then(author => {
         if (!author) {
-          return res.status(400).send({
-            message: 'Author Not Found',
-          });
+          return res.status(400).send({ message: 'Author Not Found' });
         }
         return author
           .destroy()
