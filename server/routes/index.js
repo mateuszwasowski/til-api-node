@@ -23,5 +23,5 @@ module.exports = (app) => {
   app.get('/api/votes/:voteId', votesController.retrieve);
   app.delete('/api/votes/:voteId', votesController.destroy);
 
-  app.get('/google_auth', sessionController.google_auth);
+  app.get('/api/google_auth', sessionController.google_auth);
 };
