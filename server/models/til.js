@@ -1,4 +1,6 @@
 const request = require("request");
+var Pusher = require('pusher');
+const TilSerializer = require('../serializers/til_serializer');
 
 module.exports = (sequelize, DataTypes) => {
   const Til = sequelize.define('Til', {
@@ -29,5 +31,29 @@ module.exports = (sequelize, DataTypes) => {
       });
     });
   });
+
+  Til.afterCreate('triggerPusher', (til, options) => {
+    var pusher = new Pusher({
+      appId: process.env.PUSHER_APP_ID,
+      key: process.env.PUSHER_KEY,
+      secret: process.env.PUSHER_APP_ID,
+      encrypted: ENCRYPTED,
+      cluster: 'en',
+    });
+
+    this.findAll({
+      include: [
+        { model: Vote, as: "votes" },
+        { model: Author, as: "author" }
+      ],
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+    })
+    .then(tils => {
+      pusher.trigger(process.env.PUSHER_CHANNEL_ID, 'objectsUpdated', TilSerializer.serialize(tils));
+    })
+  });
+
   return Til;
 };
