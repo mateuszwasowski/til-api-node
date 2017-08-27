@@ -27,7 +27,7 @@ module.exports = {
               description: req.body.text,
               authorId: author.id,
             })
-            .then(() => res.status(200).send(JSON.stringify(text: "Your Til has been submited!")))
+            .then(() => res.status(200).send(JSON.stringify({ text: "Your Til has been submited!" })))
             .catch(error => res.status(400).send(error));
           })
         }
