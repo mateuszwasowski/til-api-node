@@ -28,7 +28,7 @@ module.exports = function GoogleOuath2Service() {
               author.destroy()
             }
           });
-          
+
           Author.find({
             where: {
               email: body.email
@@ -41,7 +41,7 @@ module.exports = function GoogleOuath2Service() {
                   first_name: body.given_name,
                   last_name: body.family_name,
                 })
-                .then(created_author => { return res.status(201).send(AuthorSerializer.serialize(created_author) }))
+                .then(created_author => { return res.status(201).send(AuthorSerializer.serialize(created_author)) })
             }
             return res.status(200).send(AuthorSerializer.serialize(author));
           })
