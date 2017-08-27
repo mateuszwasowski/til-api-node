@@ -18,9 +18,9 @@ module.exports = function GoogleOuath2Service() {
       if (!err) {
         oauth2Client.setCredentials(tokens);
         request("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + tokens.access_token, function(error, response, body) {
-          pino.info(response);
-          pino.info("BODY:")
           pino.info(body);
+          pino.info(JSON.parse(body))
+          pino.info(JSON.parse(body).email)
         });
         pino.info(tokens)
       }
