@@ -18,15 +18,13 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Til.afterCreate('postToChannel', (til, options) => {
-    pino.info("HELLO!?");
-    pino.info(til.description);
     request({
         url: "https://hooks.slack.com/services/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",
         method: "POST",
         headers: {
             "content-type": "application/json",
         },
-        body: JSON.stringify({ text: "posted:" + til.description })
+        body: JSON.stringify({ text: til.getAuthor().email + "posted: \n" + til.description })
     });
   });
   return Til;
