@@ -1,3 +1,5 @@
+const request = require("request");
+
 module.exports = (sequelize, DataTypes) => {
   const Til = sequelize.define('Til', {
     description: DataTypes.STRING
@@ -14,5 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'votes',
     });
   };
+
+  Til.afterCreate('postToChannel', (til, options) => {
+    request.post({
+      url:'https://hooks.slack.com/services/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',
+      json: { body: JSON.stringify({ text: til.author.email + "posted:" + til.description })}
+    });
+  });
   return Til;
 };

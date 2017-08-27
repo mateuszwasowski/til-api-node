@@ -2,7 +2,6 @@ const TilSerializer = require('../serializers/author_serializer');
 const Author = require('../models').Author;
 const Til = require('../models').Til;
 const request = require("request");
-const pino = require("pino")();
 
 module.exports = {
   slacktil(req, res) {
