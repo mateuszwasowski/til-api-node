@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Til = sequelize.define('Til', {
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    allowNull: false,
   });
   Til.associate = (models) => {
     Til.belongsTo(models.Author, {
