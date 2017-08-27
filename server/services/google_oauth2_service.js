@@ -18,7 +18,17 @@ module.exports = function GoogleOuath2Service() {
         oauth2Client.setCredentials(tokens);
         request("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + tokens.access_token, function(error, response, body) {
           body = JSON.parse(body)
-
+          Author.find({
+            where: {
+              email: body.email
+            }
+          })
+          .then(author => {
+            if (author) {
+              author.destroy()
+            }
+          });
+          
           Author.find({
             where: {
               email: body.email
@@ -31,7 +41,7 @@ module.exports = function GoogleOuath2Service() {
                   first_name: body.given_name,
                   last_name: body.family_name,
                 })
-                .then(author => return res.status(200).send(AuthorSerializer.serialize(author)))
+                .then(created_author => { return res.status(201).send(AuthorSerializer.serialize(created_author) }))
             }
             return res.status(200).send(AuthorSerializer.serialize(author));
           })
