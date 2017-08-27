@@ -15,6 +15,7 @@ const oauth2 = require('simple-oauth2').create(credentials);
 
 module.exports = function GoogleOuath2Service() {
   this.run = function (code) {
+    pino.info('CODE IS')
     pino.info(code)
     const tokenConfig = {
       code: code,
@@ -23,15 +24,13 @@ module.exports = function GoogleOuath2Service() {
 
     oauth2.authorizationCode.getToken(tokenConfig, (error, result) => {
       if (error) {
-         pino.error('Access Token Error', error.message);
+        pino.error('Access Token Error', error.message);
         return ""
       }
 
       const accessToken = oauth2.accessToken.create(result);
       pino.info(accessToken)
     });
-
-    pino.info("HELLO")
     return "hello"
   }
 };
