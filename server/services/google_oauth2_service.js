@@ -35,7 +35,7 @@ module.exports = function GoogleOuath2Service() {
             }
           })
           .then(author => {
-            pino.info(author);
+            pino.info(author.email);
             pino.info("WHATAAP");
             if (!author) {
               Author.create({
