@@ -1,36 +1,28 @@
 const pino = require('pino')()
 
-const credentials = {
-  client: {
-    id: process.env.CLIENT_ID,
-    secret: process.env.CLIENT_SECRET
-  },
-  auth: {
-    tokenHost: 'https://til-mw.herokuapp.com'
-  }
-};
+const google = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
 
-
-const oauth2 = require('simple-oauth2').create(credentials);
 
 module.exports = function GoogleOuath2Service() {
   this.run = function (code) {
     pino.info('CODE IS')
     pino.info(code)
-    const tokenConfig = {
-      code: code,
-      redirect_uri: 'https://til-mw.herokuapp.com/'
-    };
 
-    oauth2.authorizationCode.getToken(tokenConfig, (error, result) => {
-      if (error) {
-        pino.error('Access Token Error', error.message);
-        return ""
+    const oauth2Client = new OAuth2(
+      process.env.CLIENT_ID,
+      process.env.CLIENT_SECRET,
+      'https://til-mw.herokuapp.com/'
+    );
+
+    oauth2Client.getToken(code, function (err, tokens) {
+      // Now tokens contains an access_token and an optional refresh_token. Save them.
+      if (!err) {
+        oauth2Client.setCredentials(tokens);
+        pino.info(tokens)
       }
-
-      const accessToken = oauth2.accessToken.create(result);
-      pino.info(accessToken)
     });
+
     return "hello"
   }
 };
