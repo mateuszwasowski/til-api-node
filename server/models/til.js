@@ -1,5 +1,7 @@
 const request = require("request");
 const pino = require("pino")();
+const Author = require('../models').Author;
+
 module.exports = (sequelize, DataTypes) => {
   const Til = sequelize.define('Til', {
     description: DataTypes.STRING
