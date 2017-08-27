@@ -7,11 +7,12 @@ const pino = require("pino")();
 module.exports = {
   slacktil(req, res) {
     pino.info(req.params);
+    pino.info("BODY:")
     pino.info(req.body);
+    pino.info("QUERY:")
     pino.info(req.query);
+    request = JSON.parse(req.query)
     request("https://slack.com/api/users.list?token=" + process.env.SLACK_TOKEN, function(error, response, body) {
-      pino.info(error);
-      pino.info(body);
       body = JSON.parse(body)
       body.members.forEach(function (member) {
         pino.info(member.name)
