@@ -10,7 +10,7 @@ module.exports = {
       res.setHeader('Content-Type', 'application/json');
       body = JSON.parse(body)
       body.members.forEach(function (member) {
-        if (member.name === body.user_name){
+        if (member.name === req.body.user_name){
           Author.find({
             where: {
               email: member.email
@@ -24,7 +24,7 @@ module.exports = {
               }));
             }
             Til.create({
-              description: body.description,
+              description: req.body.description,
               authorId: author.id,
             })
             .then(() => res.status(200).send(JSON.stringify("Your Til has been submited!")))
