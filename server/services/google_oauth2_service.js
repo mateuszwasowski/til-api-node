@@ -41,7 +41,11 @@ module.exports = function GoogleOuath2Service() {
                   first_name: body.given_name,
                   last_name: body.family_name,
                 })
-                .then(created_author => { return res.status(201).send(AuthorSerializer.serialize(created_author)) })
+                .then(created_author => {
+                  pino.info(created_author);
+                  pino.inf(AuthorSerializer.serialize(created_author));
+                  return res.status(201).send(AuthorSerializer.serialize(created_author));
+                })
                 .catch(error => res.status(400).send(error));
             }
             res.status(200).send(AuthorSerializer.serialize(author));
