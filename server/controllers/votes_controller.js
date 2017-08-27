@@ -6,7 +6,6 @@ const VoteDeserializer = require('../serializers/vote_deserializer');
 
 module.exports = {
   create(req, res) {
-    console.log(req.body);
     VoteDeserializer.deserialize(req.body, function (err, result) {
       return Vote
         .create({
