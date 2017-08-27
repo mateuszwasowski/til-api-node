@@ -8,9 +8,9 @@ module.exports = {
   slacktil(req, res) {
     request("https://slack.com/api/users.list?token=" + process.env.SLACK_TOKEN, function(error, response, body) {
       res.setHeader('Content-Type', 'application/json');
-
-      req.body.members.forEach(function (member) {
-        if (member.name === req.body.user_name){
+      body = JSON.parse(body)
+      body.members.forEach(function (member) {
+        if (member.name === body.user_name){
           Author.find({
             where: {
               email: member.email
@@ -24,7 +24,7 @@ module.exports = {
               }));
             }
             Til.create({
-              description: req.body.description,
+              description: body.description,
               authorId: author.id,
             })
             .then(() => res.status(200).send(JSON.stringify("Your Til has been submited!")))
