@@ -31,7 +31,7 @@ module.exports = function GoogleOuath2Service() {
                   first_name: body.given_name,
                   last_name: body.family_name,
                 })
-                .then(author => res.status(200).send(AuthorSerializer.serialize(author)))
+                .then(author => return res.status(200).send(AuthorSerializer.serialize(author)))
             }
             return res.status(200).send(AuthorSerializer.serialize(author));
           })
