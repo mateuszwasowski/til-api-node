@@ -23,7 +23,7 @@ module.exports = function GoogleOuath2Service() {
 
           Author.find({
             where: {
-              email: email
+              email: body.email
             }
           })
           .then(author => {
