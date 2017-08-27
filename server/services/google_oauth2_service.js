@@ -1,11 +1,9 @@
-const Author = require('../models').Author;
 const pino = require('pino')();
-
 const google = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
-
 const request = require("request");
-
+const Author = require('../models').Author;
+const AuthorSerializer = require('../serializers/author_serializer');
 
 module.exports = function GoogleOuath2Service() {
   this.run = function (code, res) {
