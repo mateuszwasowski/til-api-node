@@ -5,6 +5,7 @@ const Til = require('../models').Til;
 
 module.exports = {
   google_auth(req, res) {
+    pino.info(process.env.CLIENT_ID)
     var author = new GoogleOuath2Service().run()
     return Author
     .findById(1, {
