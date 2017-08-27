@@ -11,7 +11,6 @@ module.exports = {
     pino.info(req.body);
     pino.info("QUERY:")
     pino.info(req.query);
-    request = JSON.parse(req.query)
     request("https://slack.com/api/users.list?token=" + process.env.SLACK_TOKEN, function(error, response, body) {
       body = JSON.parse(body)
       body.members.forEach(function (member) {
