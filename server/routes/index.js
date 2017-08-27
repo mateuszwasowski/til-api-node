@@ -2,6 +2,7 @@ const tilsController = require('../controllers').tils;
 const authorsController = require('../controllers').authors;
 const votesController = require('../controllers').votes
 const sessionController = require('../controllers').session
+const slackController = require('../controllers').slack
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -24,4 +25,6 @@ module.exports = (app) => {
   app.delete('/api/votes/:voteId', votesController.destroy);
 
   app.get('/api/google_auth', sessionController.google_auth);
+
+  app.post('/api/slacktil', slackController.slacktil);
 };
