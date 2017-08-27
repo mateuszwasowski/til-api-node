@@ -45,12 +45,12 @@ module.exports = function GoogleOuath2Service() {
                 })
                 .then(created_author => {
                   pino.info("HELLO2");
-                  pino.info(created_author);
                   pino.inf(AuthorSerializer.serialize(created_author));
-                  return res.status(201).send(AuthorSerializer.serialize(created_author));
+                  return res.status(200).send(AuthorSerializer.serialize(created_author));
                 })
                 .catch(error => res.status(400).send(error));
             }
+            pino.info("HELLO3");
             res.status(200).send(AuthorSerializer.serialize(author));
           })
         });
