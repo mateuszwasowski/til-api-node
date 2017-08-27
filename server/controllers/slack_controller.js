@@ -23,8 +23,10 @@ module.exports = {
                   text: "You first have to authorize google through the til web app to connect your account."
               }));
             }
+            pino.info(req.body);
+            pino.info(body);
             Til.create({
-              description: req.body.description,
+              description: body.description,
               authorId: author.id,
             })
             .then(() => res.status(200).send(JSON.stringify("Your Til has been submited!")))
