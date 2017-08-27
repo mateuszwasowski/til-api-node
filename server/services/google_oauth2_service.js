@@ -1,4 +1,3 @@
-const pino = require('pino')();
 const google = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
 const request = require("request");
@@ -18,16 +17,6 @@ module.exports = function GoogleOuath2Service() {
         oauth2Client.setCredentials(tokens);
         request("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + tokens.access_token, function(error, response, body) {
           body = JSON.parse(body)
-          Author.find({
-            where: {
-              email: body.email
-            }
-          })
-          .then(author => {
-            if (author) {
-              author.destroy()
-            }
-          });
 
           Author.find({
             where: {
@@ -35,22 +24,17 @@ module.exports = function GoogleOuath2Service() {
             }
           })
           .then(author => {
-            pino.info("WHATAAP");
             if (!author) {
-              pino.info("HELLO1");
               return Author.create({
                   email: body.email,
                   first_name: body.given_name,
                   last_name: body.family_name,
                 })
                 .then(created_author => {
-                  pino.info("HELLO2");
-                  pino.info(AuthorSerializer.serialize(created_author));
                   return res.status(200).send(AuthorSerializer.serialize(created_author));
                 })
                 .catch(error => res.status(400).send(error));
             }
-            pino.info("HELLO3");
             res.status(200).send(AuthorSerializer.serialize(author));
           })
         });
