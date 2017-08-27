@@ -18,13 +18,21 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Til.afterCreate('postToChannel', (til, options) => {
+    Author.findById(til.authorId)
+    .then(author => {
+      pino.info(author.email);
+    });
+    pino.info("FUN!");
+    til.getAuthor().then(author =>{
+      pino.info(author.email);
+    });
     request({
         url: "https://hooks.slack.com/services/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",
         method: "POST",
         headers: {
             "content-type": "application/json",
         },
-        body: JSON.stringify({ text: til.getAuthor().email + "posted: \n" + til.description })
+        body: JSON.stringify({ text: til.getAuthor().email + " posted: \n" + til.description })
     });
   });
   return Til;
