@@ -6,9 +6,9 @@ const pino = require('pino')()
 
 module.exports = {
   google_auth(req, res) {
-    pino.log(req.body)
-    pino.log(req.params)
-    pino.log(req.query)
+    pino.info(req.body)
+    pino.info(req.params)
+    pino.info(req.query)
     var author = new GoogleOuath2Service().run(req.params.code)
     return Author
     .findById(1, {
