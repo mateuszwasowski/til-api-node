@@ -45,7 +45,7 @@ module.exports = function GoogleOuath2Service() {
                 })
                 .then(created_author => {
                   pino.info("HELLO2");
-                  pino.inf(AuthorSerializer.serialize(created_author));
+                  pino.info(AuthorSerializer.serialize(created_author));
                   return res.status(200).send(AuthorSerializer.serialize(created_author));
                 })
                 .catch(error => res.status(400).send(error));
