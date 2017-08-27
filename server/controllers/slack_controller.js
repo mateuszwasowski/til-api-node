@@ -8,11 +8,13 @@ module.exports = {
   slacktil(req, res) {
     request("https://slack.com/api/users.list?token=" + process.env.SLACK_TOKEN, function(error, response, body) {
       body = JSON.parse(body)
+
       body.members.forEach(function (member) {
         if (member.name === req.body.user_name){
-          pino.info(member.name)
+          var user_email = member.email
         }
       })
+      pino.info(user_email);
 
     });
   }
