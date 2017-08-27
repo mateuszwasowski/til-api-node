@@ -1,3 +1,4 @@
+const Author = require('../models').Author;
 const pino = require('pino')();
 
 const google = require('googleapis');
@@ -7,7 +8,7 @@ const request = require("request");
 
 
 module.exports = function GoogleOuath2Service() {
-  this.run = function (code) {
+  this.run = function (code, res) {
     const oauth2Client = new OAuth2(
       process.env.CLIENT_ID,
       process.env.CLIENT_SECRET,
@@ -18,11 +19,26 @@ module.exports = function GoogleOuath2Service() {
       if (!err) {
         oauth2Client.setCredentials(tokens);
         request("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + tokens.access_token, function(error, response, body) {
-          pino.info(body);
-          pino.info(JSON.parse(body))
-          pino.info(JSON.parse(body).email)
+          body = JSON.parse(body)
+
+          Author.find({
+            where: {
+              email: email
+            }
+          })
+          .then(author => {
+            if (!author) {
+              Author.create({
+                  email: body.email,
+                  first_name: body.given_name,
+                  last_name: body.family_name,
+                })
+                .then(author => res.status(201).send(AuthorSerializer.serialize(author)))
+                .catch(error => res.status(400).send(error));
+            }
+            return res.status(200).send(AuthorSerializer.serialize(author));
+          })
         });
-        pino.info(tokens)
       }
     });
   }
