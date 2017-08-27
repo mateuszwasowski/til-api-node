@@ -13,7 +13,7 @@ module.exports = {
         if (member.name === req.body.user_name){
           Author.find({
             where: {
-              email: member.email
+              email: member.profile.email
             }
           })
           .then(author => {
