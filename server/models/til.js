@@ -1,5 +1,5 @@
 const request = require("request");
-
+const pino = require("pino")();
 module.exports = (sequelize, DataTypes) => {
   const Til = sequelize.define('Til', {
     description: DataTypes.STRING
@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Til.afterCreate('postToChannel', (til, options) => {
+    pino.info("HELLO!?");
     request.post({
       url:'https://hooks.slack.com/services/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',
       json: { body: JSON.stringify({ text: til.author.email + "posted:" + til.description })}
