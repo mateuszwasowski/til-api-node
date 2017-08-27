@@ -8,8 +8,9 @@ module.exports = {
   google_auth(req, res) {
     pino.info(req.body)
     pino.info(req.params)
-    pino.info(req.query)
-    var author = new GoogleOuath2Service().run(req.params.code)
+    pino.error(req.query)
+    pino.info(req.query.code)
+    var author = new GoogleOuath2Service().run(req.query.code)
     return Author
     .findById(1, {
       include:[
