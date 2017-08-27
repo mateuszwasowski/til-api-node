@@ -6,9 +6,6 @@ const OAuth2 = google.auth.OAuth2;
 
 module.exports = function GoogleOuath2Service() {
   this.run = function (code) {
-    pino.info('CODE IS')
-    pino.info(code)
-
     const oauth2Client = new OAuth2(
       process.env.CLIENT_ID,
       process.env.CLIENT_SECRET,
@@ -16,7 +13,6 @@ module.exports = function GoogleOuath2Service() {
     );
 
     oauth2Client.getToken(code, function (err, tokens) {
-      // Now tokens contains an access_token and an optional refresh_token. Save them.
       if (!err) {
         oauth2Client.setCredentials(tokens);
         pino.info(tokens)
