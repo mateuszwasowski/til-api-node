@@ -20,14 +20,14 @@ module.exports = {
             if (!author) {
               return res.status(200).send(JSON.stringify({
                  response_type: "ephemeral",
-                  text: "You first have to authorize google through the til web app to connect your account."
+                 text: "You first have to authorize google through the til web app to connect your account."
               }));
             }
             Til.create({
               description: req.body.text,
               authorId: author.id,
             })
-            .then(() => res.status(200).send(JSON.stringify("Your Til has been submited!")))
+            .then(() => res.status(200).send(JSON.stringify(text: "Your Til has been submited!")))
             .catch(error => res.status(400).send(error));
           })
         }
