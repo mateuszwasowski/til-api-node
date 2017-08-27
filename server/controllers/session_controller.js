@@ -5,7 +5,7 @@ const Til = require('../models').Til;
 
 module.exports = {
   google_auth(req, res) {
-    var author = new GoogleOuath2Service().run()
+    var author = new GoogleOuath2Service().run(req.params.code)
     return Author
     .findById(1, {
       include:[
